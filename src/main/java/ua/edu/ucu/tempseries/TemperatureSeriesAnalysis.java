@@ -23,8 +23,8 @@ public class TemperatureSeriesAnalysis {
     private void checkIfValidTemperatures(double[] temperatureSeries) {
         for (double temp : temperatureSeries) {
             if (temp < MIN_TEMP) {
-                throw new InputMismatchException("Temperature can't be less " +
-                        "than -273.15");
+                throw new InputMismatchException("Temperature can't be less "
+                        + "than -273.15");
             }
         }
     }
