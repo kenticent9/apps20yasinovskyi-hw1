@@ -7,11 +7,6 @@ public class TemperatureSeriesAnalysis {
     private double[] tempSeries;
     private int length;
 
-    public static void main(String[] args) {
-        TemperatureSeriesAnalysis a = new TemperatureSeriesAnalysis(new double[] {1, 1, 1, 1});
-        System.out.println(a.summaryStatistics());
-    }
-
     public TemperatureSeriesAnalysis() {
         tempSeries = new double[] {};
         length = 0;
