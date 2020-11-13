@@ -7,6 +7,11 @@ public class TemperatureSeriesAnalysis {
     private double[] tempSeries;
     private int length;
 
+    public static void main(String[] args) {
+        TemperatureSeriesAnalysis a = new TemperatureSeriesAnalysis(new double[] {1, 1, 1, 1});
+        System.out.println(a.summaryStatistics());
+    }
+
     public TemperatureSeriesAnalysis() {
         tempSeries = new double[] {};
         length = 0;
@@ -23,7 +28,8 @@ public class TemperatureSeriesAnalysis {
     private void checkIfValidTemperatures(double[] temperatureSeries) {
         for (double temp : temperatureSeries) {
             if (temp < MIN_TEMP) {
-                throw new InputMismatchException();
+                throw new InputMismatchException("Temperature can't be less " +
+                        "than -273.15");
             }
         }
     }
@@ -42,7 +48,7 @@ public class TemperatureSeriesAnalysis {
 
     private void checkIfNotEmpty() {
         if (getLength() == 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("No temperatures");
         }
     }
 

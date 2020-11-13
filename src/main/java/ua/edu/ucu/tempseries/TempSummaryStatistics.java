@@ -12,4 +12,11 @@ public final class TempSummaryStatistics {
         minTemp = seriesAnalysis.min();
         maxTemp = seriesAnalysis.max();
     }
+
+    @Override
+    public String toString() {
+        return "TempSummaryStatistics(avgTemp=" + avgTemp + ", devTemp="
+                + devTemp + ", minTemp=" + minTemp + ", maxTemp=" + maxTemp
+                + ")";
+    }
 }

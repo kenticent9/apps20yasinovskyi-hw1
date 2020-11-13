@@ -2,6 +2,7 @@ package ua.edu.ucu.tempseries;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 //import org.junit.Ignore;
@@ -15,6 +16,7 @@ public class TemperatureSeriesAnalysisTest {
     private double[] temperatureSeries;
     private double[] invalidArray;
     private double[] mirrorArray;
+    private double[] temperatureSeries2;
 
     @Before
     public void init() {
@@ -23,6 +25,7 @@ public class TemperatureSeriesAnalysisTest {
         temperatureSeries = new double[] {3.0, -5.0, 1.0, 5.0};
         invalidArray = new double[] {3.0, -5.0, 1.0, 5.0, -300.0};
         mirrorArray = new double[] {3.0, -3.0, -5.0, 1.0, -1.0, 5.0};
+        temperatureSeries2 = new double[] {3.0, 4.0, 7.0, 12.0};
     }
 
     @Test
@@ -83,6 +86,13 @@ public class TemperatureSeriesAnalysisTest {
         double actualResult = seriesAnalysis.deviation();
 
         assertEquals(expResult, actualResult, delta);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeviationWithEmptyArray() {
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis();
+
+        seriesAnalysis.deviation();
     }
 
     @Test
@@ -158,18 +168,30 @@ public class TemperatureSeriesAnalysisTest {
     @Test
     public void testSummaryStatistics() {
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
-        seriesAnalysis.summaryStatistics();
-    }
+        String expResult = "TempSummaryStatistics(avgTemp=1.0, devTemp=3.7416573867739413, minTemp=-5.0, maxTemp=5.0)";
 
-    @Test
-    public void testInitializeByDefault() {
-        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis();
+        String actualResult = seriesAnalysis.summaryStatistics().toString();
+
+        assertEquals(expResult, actualResult);
     }
 
     @Test
     public void testAddTemps() {
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 3.75;
+
+        seriesAnalysis.addTemps(temperatureSeries2);
+        double actualResult = seriesAnalysis.average();
+        assertEquals(expResult, actualResult, delta);
+    }
+
+    @Test
+    public void testAddSameTemps() {
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 1;
 
         seriesAnalysis.addTemps(temperatureSeries);
+        double actualResult = seriesAnalysis.average();
+        assertEquals(expResult, actualResult, delta);
     }
 }
