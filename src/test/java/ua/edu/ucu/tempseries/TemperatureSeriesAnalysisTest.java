@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysisTest {
-    final static double delta = 0.00001;
+    final static double DELTA = 0.00001;
     private double[] oneElementArray;
     private double[] emptyArray;
     private double[] temperatureSeries;
@@ -74,7 +74,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualResult = seriesAnalisys.average();
 
-        assertEquals(expResult, actualResult, delta);
+        assertEquals(expResult, actualResult, DELTA);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualResult = seriesAnalysis.deviation();
 
-        assertEquals(expResult, actualResult, delta);
+        assertEquals(expResult, actualResult, DELTA);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -101,7 +101,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualResult = seriesAnalysis.min();
 
-        assertEquals(expResult, actualResult, delta);
+        assertEquals(expResult, actualResult, DELTA);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualResult = seriesAnalysis.max();
 
-        assertEquals(expResult, actualResult, delta);
+        assertEquals(expResult, actualResult, DELTA);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualResult = seriesAnalysis.findTempClosestToZero();
 
-        assertEquals(expResult, actualResult, delta);
+        assertEquals(expResult, actualResult, DELTA);
     }
 
     @Test
@@ -131,7 +131,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualResult = seriesAnalysis.findTempClosestToZero();
 
-        assertEquals(expResult, actualResult, delta);
+        assertEquals(expResult, actualResult, DELTA);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualResult = seriesAnalysis.findTempClosestToValue(4);
 
-        assertEquals(expResult, actualResult, delta);
+        assertEquals(expResult, actualResult, DELTA);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double[] actualResult = seriesAnalysis.findTempsLessThen(4);
 
-        assertArrayEquals(actualResult, expResult, delta);
+        assertArrayEquals(actualResult, expResult, DELTA);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class TemperatureSeriesAnalysisTest {
 
         double[] actualResult = seriesAnalysis.findTempsGreaterThen(4);
 
-        assertArrayEquals(actualResult, expResult, delta);
+        assertArrayEquals(actualResult, expResult, DELTA);
     }
 
     @Test
@@ -188,8 +188,8 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualSum = seriesAnalysis.addTemps(temperatureSeries2);
         double actualResult = seriesAnalysis.average();
-        assertEquals(expResult, actualResult, delta);
-        assertEquals(expSum, actualSum, delta);
+        assertEquals(expResult, actualResult, DELTA);
+        assertEquals(expSum, actualSum, DELTA);
     }
 
     @Test
@@ -200,8 +200,8 @@ public class TemperatureSeriesAnalysisTest {
 
         double actualSum = seriesAnalysis.addTemps(temperatureSeries);
         double actualResult = seriesAnalysis.average();
-        assertEquals(expResult, actualResult, delta);
-        assertEquals(expSum, actualSum, delta);
+        assertEquals(expResult, actualResult, DELTA);
+        assertEquals(expSum, actualSum, DELTA);
     }
 
     @Test(expected = InputMismatchException.class)
