@@ -203,4 +203,10 @@ public class TemperatureSeriesAnalysisTest {
         assertEquals(expResult, actualResult, delta);
         assertEquals(expSum, actualSum, delta);
     }
+
+    @Test(expected = InputMismatchException.class)
+    public void testAddInvalidTemps() {
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        seriesAnalysis.addTemps(invalidArray);
+    }
 }

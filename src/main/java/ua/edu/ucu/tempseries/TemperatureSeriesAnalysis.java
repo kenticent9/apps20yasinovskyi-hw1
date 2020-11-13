@@ -151,7 +151,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double addTemps(double... temps) {
-        checkIfValidTemperatures(tempSeries);
+        checkIfValidTemperatures(temps);
         if (tempSeries.length - getLength() <= temps.length) {
             double[] newTemps = new double[2*(getLength() + temps.length)];
             System.arraycopy(tempSeries, 0, newTemps, 0,
