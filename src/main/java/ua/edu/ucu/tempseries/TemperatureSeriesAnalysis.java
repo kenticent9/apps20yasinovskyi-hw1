@@ -100,7 +100,8 @@ public class TemperatureSeriesAnalysis {
             if (diff < closestDiff) {
                 closestTemp = tempSeries[i];
                 closestDiff = diff;
-            } else if (Math.abs(diff - closestDiff) < DELTA && tempSeries[i] > closestTemp) {
+            } else if (Math.abs(diff - closestDiff) < DELTA
+                    && tempSeries[i] > closestTemp) {
                 closestTemp = tempSeries[i];
             }
         }
