@@ -2,7 +2,6 @@ package ua.edu.ucu.tempseries;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 //import org.junit.Ignore;
@@ -175,23 +174,33 @@ public class TemperatureSeriesAnalysisTest {
         assertEquals(expResult, actualResult);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testSummaryStatisticsWithEmptyArray() {
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(emptyArray);
+        seriesAnalysis.summaryStatistics();
+    }
+
     @Test
     public void testAddTemps() {
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
         double expResult = 3.75;
+        double expSum = 30.0;
 
-        seriesAnalysis.addTemps(temperatureSeries2);
+        double actualSum = seriesAnalysis.addTemps(temperatureSeries2);
         double actualResult = seriesAnalysis.average();
         assertEquals(expResult, actualResult, delta);
+        assertEquals(expSum, actualSum, delta);
     }
 
     @Test
     public void testAddSameTemps() {
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
         double expResult = 1;
+        double expSum = 8.0;
 
-        seriesAnalysis.addTemps(temperatureSeries);
+        double actualSum = seriesAnalysis.addTemps(temperatureSeries);
         double actualResult = seriesAnalysis.average();
         assertEquals(expResult, actualResult, delta);
+        assertEquals(expSum, actualSum, delta);
     }
 }

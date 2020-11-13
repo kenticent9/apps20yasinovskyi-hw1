@@ -3,7 +3,7 @@ package ua.edu.ucu.tempseries;
 import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysis {
-    static final double MIN_TEMP = -273.15;  // The minimal possible temperature
+    static final double MINTEMP = -273.15;  // The minimal possible temperature
     private double[] tempSeries;
     private int length;
 
@@ -21,8 +21,8 @@ public class TemperatureSeriesAnalysis {
     }
 
     private void checkIfValidTemperatures(double[] temperatureSeries) {
-        for (double temp : temperatureSeries) {
-            if (temp < MIN_TEMP) {
+        for (int i = 0; i < temperatureSeries.length; i++) {
+            if (temperatureSeries[i] < MINTEMP) {
                 throw new InputMismatchException("Temperature can't be less "
                         + "than -273.15");
             }
@@ -31,8 +31,8 @@ public class TemperatureSeriesAnalysis {
 
     private double findSum() {
         double sum = 0;
-        for (double temp : tempSeries) {
-            sum += temp;
+        for (int i = 0; i < length; i++) {
+            sum += tempSeries[i];
         }
         return sum;
     }
@@ -53,11 +53,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double deviation() {
-        checkIfNotEmpty();
+        // There no need to check if the array is empty, because we've already
+        // done it in average()
         double mean = average();
         double sum = 0;
-        for (double temp : tempSeries) {
-            double diff = temp - mean;
+        for (int i = 0; i < length; i++) {
+            double diff = tempSeries[i] - mean;
             sum += diff*diff;
         }
         return Math.sqrt(sum / getLength());
@@ -66,9 +67,9 @@ public class TemperatureSeriesAnalysis {
     public double min() {
         checkIfNotEmpty();
         double minValue = tempSeries[0];
-        for (double temp : tempSeries) {
-            if (temp < minValue) {
-                minValue = temp;
+        for (int i = 0; i < length; i++) {
+            if (tempSeries[i] < minValue) {
+                minValue = tempSeries[i];
             }
         }
         return minValue;
@@ -77,9 +78,9 @@ public class TemperatureSeriesAnalysis {
     public double max() {
         checkIfNotEmpty();
         double maxValue = tempSeries[0];
-        for (double temp : tempSeries) {
-            if (temp > maxValue) {
-                maxValue = temp;
+        for (int i = 0; i < length; i++) {
+            if (tempSeries[i] > maxValue) {
+                maxValue = tempSeries[i];
             }
         }
         return maxValue;
@@ -92,14 +93,14 @@ public class TemperatureSeriesAnalysis {
     public double findTempClosestToValue(double tempValue) {
         checkIfNotEmpty();
         double closestTemp = tempSeries[0];
-        double closestDiff = Math.abs(closestTemp - tempValue);
-        for (double temp : tempSeries) {
-            double diff = Math.abs(tempValue - temp);
+        double closestDiff = Math.abs(tempValue - closestTemp);
+        for (int i = 0; i < length; i++) {
+            double diff = Math.abs(tempValue - tempSeries[i]);
             if (diff < closestDiff) {
-                closestTemp = temp;
+                closestTemp = tempSeries[i];
                 closestDiff = diff;
-            } else if (diff == closestDiff && temp > closestTemp) {
-                closestTemp = temp;
+            } else if (diff == closestDiff && tempSeries[i] > closestTemp) {
+                closestTemp = tempSeries[i];
             }
         }
         return closestTemp;
@@ -107,8 +108,8 @@ public class TemperatureSeriesAnalysis {
 
     private int findNumTempsLessThen(double tempValue) {
         int num = 0;
-        for (double temp : tempSeries) {
-            if (temp < tempValue) {
+        for (int i = 0; i < length; i++) {
+            if (tempSeries[i] < tempValue) {
                 num++;
             }
         }
@@ -122,10 +123,10 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsLessThen(double tempValue) {
         checkIfNotEmpty();
         double[] lesserTemps = new double[findNumTempsLessThen(tempValue)];
-        int i = 0;
-        for (double temp : tempSeries) {
-            if (temp < tempValue) {
-                lesserTemps[i++] = temp;
+        int j = 0;
+        for (int i = 0; i < length; i++) {
+            if (tempSeries[i] < tempValue) {
+                lesserTemps[j++] = tempSeries[i];
             }
         }
         return lesserTemps;
@@ -134,21 +135,22 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsGreaterThen(double tempValue) {
         checkIfNotEmpty();
         double[] greaterTemps = new double[findNumTempsGreaterThen(tempValue)];
-        int i = 0;
-        for (double temp : tempSeries) {
-            if (temp >= tempValue) {
-                greaterTemps[i++] = temp;
+        int j = 0;
+        for (int i = 0; i < length; i++) {
+            if (tempSeries[i] >= tempValue) {
+                greaterTemps[j++] = tempSeries[i];
             }
         }
         return greaterTemps;
     }
 
     public TempSummaryStatistics summaryStatistics() {
-        checkIfNotEmpty();
+        // Again, there's no need to check if the array is empty because it
+        // will be done in average()
         return new TempSummaryStatistics(this);
     }
 
-    public int addTemps(double... temps) {
+    public double addTemps(double... temps) {
         checkIfValidTemperatures(tempSeries);
         if (tempSeries.length - getLength() <= temps.length) {
             double[] newTemps = new double[2*(getLength() + temps.length)];
@@ -158,6 +160,6 @@ public class TemperatureSeriesAnalysis {
         }
         System.arraycopy(temps, 0, tempSeries, getLength(), temps.length);
         length += temps.length;
-        return 0;
+        return findSum();
     }
 }
